@@ -142,5 +142,23 @@ let getRandomUser = ()=> {
 
   app.patch("/users/:id",(req,res)=>{
     
-    res.send("Updated");
+    let { id } = req.params;
+
+    let {  username :newUsername  } = req.body;
+    let q = `SELECT * FROM STU WHERE ID = '${id}'` ;
+    try{
+    connection.query(q,(err,result)=>{
+      if(err) throw(err)
+      let user = result[0];
+
+      let q2 = `UPDATE STU SET USERNAME = '${newUsername}' WHERE ID = '${id}' `;
+      connection.query(q2, (err,result)=>{
+        if(err)throw(err);
+        res.redirect("/users")
+      })
+    })
+    }catch(err){
+      res.send("Opps! Something Happened");
+      
+    }
   })
