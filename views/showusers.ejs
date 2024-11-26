@@ -15,6 +15,10 @@
 <body>
     <h1>User Data</h1>
 
+    <form method="post" action="/users">
+        <button>Add new User</button>
+    </form>
+    <br/>
     <table>
         <tr>
             <th>ID</th>
@@ -33,6 +37,12 @@
                             <button>Edit</button>
                         </form>
                     
+                    
+                </td>
+                <td>
+                    <form method="post" action="/users/<%= user.id %>?_method=DELETE">
+                        <Button>Delete</Button>
+                    </form>
                     
                 </td>
             </tr>

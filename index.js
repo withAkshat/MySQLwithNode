@@ -162,3 +162,61 @@ let getRandomUser = ()=> {
       
     }
   })
+
+  // Add Route
+
+  app.post("/users" ,(req,res)=>{
+
+    try {
+      res.render("add.ejs");
+      
+    } catch (err) {
+      res.send("Err in /users");
+    }
+    
+  })
+
+
+  app.post("/users/add" ,(req,res)=>{
+
+    let { id , username , email } = req.body;
+
+    q = `INSERT INTO STU (ID , USERNAME , email) VALUES ('${id}', '${username}' , '${email}') `;
+    
+
+      try{
+    connection.query(q, (err,result)=>{
+      if(err)throw(err);
+      
+      console.log(result);
+      res.redirect("/users")
+    })
+    }catch(err){
+      res.send("Err in /users/add");
+      
+    }
+
+  })
+
+  // Delete Route
+
+  app.delete("/users/:id",(req,res)=>{
+
+    let { id } = req.params;
+    try {
+      let q = `DELETE FROM STU WHERE ID = '${id}'`
+        connection.query(q,(err,result)=>{
+          if(err)throw(err);
+          res.redirect("/users")
+        })
+      
+        } catch(err) {
+
+          res.send("Something Happened!");
+      
+      
+    }
+        
+
+    });
+  
